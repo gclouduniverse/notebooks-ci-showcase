@@ -1,6 +1,8 @@
 steps:
 - name: 'gcr.io/cloud-builders/git'
   args: ['clone', 'https://github.com/b0noI/notebooks-ci-showcase']
+- name: 'gcr.io/cloud-builders/git'
+  args: ['clone', 'https://github.com/gclouduniverse/JupyterNotebooksDevelopmentManifesto.git']
 - name: 'google/cloud-sdk:237.0.0'
-  args: ['./run_test.sh']
+  args: ['../JupyterNotebooksDevelopmentManifesto/3_self_contained/enable_notebook_submission.sh && ./run_test.sh']
   dir: 'notebooks-ci-showcase'
