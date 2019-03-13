@@ -65,13 +65,15 @@ function execute_notebook_with_gpu() {
     wait_till_instance_not_exist "${INSTANCE_NAME}" "${ZONE}"
     echo "execution has been finished, downloading the result (notebook.ipynb)"
     gsutil cp "${TEMP_GCS_LOCATION}/notebook.ipynb" .
-    gsutil cp "${TEMP_GCS_LOCATION}/notebook_error.ipynb" .
+    gsutil rm "${TEMP_GCS_LOCATION}/notebook.ipynb"
+    gsutil cp "${TEMP_GCS_LOCATION}/FAILED" .
+    gsutil rm "${TEMP_GCS_LOCATION}/FAILED"
     echo "done"
     return 0
 }
 
 execute_notebook_with_gpu basic_text_classification.ipynb gs://dl-platform-temp/notebook-ci-showcase p100 1 || exit 1
-if [[ ! -f ./notebook.ipynb ]]; then
+if [[ -f ./FAILED ]]; then
    exit 1
 fi
 exit 0
