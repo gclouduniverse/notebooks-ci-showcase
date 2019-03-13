@@ -65,10 +65,7 @@ function execute_notebook_with_gpu() {
     wait_till_instance_not_exist "${INSTANCE_NAME}" "${ZONE}"
     echo "execution has been finished, downloading the result (notebook.ipynb)"
     gsutil cp "${TEMP_GCS_LOCATION}/notebook.ipynb" .
-    if [[ $? -eq 1 ]]; then
-        echo "There was a problem with downloading result notebook (${TEMP_GCS_LOCATION}/notebook.ipynb)."
-        return 1
-    fi
+    gsutil cp "${TEMP_GCS_LOCATION}/notebook_error.ipynb" .
     echo "done"
     return 0
 }
