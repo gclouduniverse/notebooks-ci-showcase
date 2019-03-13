@@ -56,7 +56,7 @@ function execute_notebook_with_gpu() {
             --machine-type="${INSTANCE_TYPE}" \
             --boot-disk-size=200GB \
             --scopes=https://www.googleapis.com/auth/cloud-platform \
-            --metadata="input_notebook=${INPUT_NOTEBOOK_GCS_PATH},output_notebook=${TEMP_GCS_LOCATION},startup-script-url=https://raw.githubusercontent.com/b0noI/gcp-notebook-executor/master/notebook_executor.sh" \
+            --metadata="testing_mode=true,input_notebook=${INPUT_NOTEBOOK_GCS_PATH},output_notebook=${TEMP_GCS_LOCATION},startup-script-url=https://raw.githubusercontent.com/b0noI/gcp-notebook-executor/testing_mode_support/notebook_executor.sh" \
             --quiet
     if [[ $? -eq 1 ]]; then
         echo "Creation of background instance for trainin have failed."
