@@ -8,4 +8,4 @@ steps:
 artifacts:
   objects:
     location: 'gs://dl-platform-temp/notebook-ci-showcase/results'
-    paths: [ 'notebooks-ci-showcase/notebook.ipynb', 'notebooks-ci-showcase/notebook_error.ipynb' ]
+    paths: [ 'notebooks-ci-showcase/notebook.ipynb' ]
