@@ -73,7 +73,11 @@ function execute_notebook_with_gpu() {
 }
 
 execute_notebook_with_gpu basic_text_classification.ipynb gs://dl-platform-temp/notebook-ci-showcase p100 1 || exit 1
-if [[ -f ./FAILED ]]; then
+
+gsutil cp ./notebook.ipynb gs://dl-platform-temp/notebook-ci-showcase/results/$(date +%s)/
+
+if [[ -e ./FAILED || ! -e ./notebook.ipynb ]]; then
+   rm -rf ./FAILED
    exit 1
 fi
 exit 0
