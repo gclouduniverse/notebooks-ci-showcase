@@ -5,7 +5,7 @@ steps:
   args: ['-c', './run_test.sh']
   dir: 'notebooks-ci-showcase'
   entrypoint: '/bin/bash'
-artifacts:
-  objects:
-    location: 'gs://dl-platform-temp/notebook-ci-showcase/results'
-    paths: [ 'notebooks-ci-showcase/notebook.ipynb' ]
+- name: 'gcr.io/cloud-builders/gsutil'
+  args: ['notebook.ipynb', 'gs://dl-platform-temp/notebook-ci-showcase/results/${BUILD_ID}/demo.ipynb']
+  dir: 'notebooks-ci-showcase'
+  entrypoint: '/bin/bash'

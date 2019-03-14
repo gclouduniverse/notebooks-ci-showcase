@@ -72,12 +72,12 @@ function execute_notebook_with_gpu() {
     return 0
 }
 
-execute_notebook_with_gpu basic_text_classification.ipynb gs://dl-platform-temp/notebook-ci-showcase p100 1 || exit 1
+execute_notebook_with_gpu demo.ipynb gs://dl-platform-temp/notebook-ci-showcase p100 1 || exit 1
 
 BUILD_ID=$(date +%s)
 gsutil cp ./notebook.ipynb "gs://dl-platform-temp/notebook-ci-showcase/results/${BUILD_ID}/"
 echo "Build id: ${BUILD_ID}"
-echo "Build url: gs://dl-platform-temp/notebook-ci-showcase/results/${BUILD_ID}/"
+echo "Build url: gs://dl-platform-temp/notebook-ci-showcase/results/${BUILD_ID}/notebook.ipynb"
 
 if [[ -e ./FAILED || ! -e ./notebook.ipynb ]]; then
    rm -rf ./FAILED
