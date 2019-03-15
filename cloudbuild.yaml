@@ -6,6 +6,6 @@ steps:
   dir: 'notebooks-ci-showcase'
   entrypoint: '/bin/bash'
 - name: 'gcr.io/cloud-builders/gsutil'
-  args: ['notebook.ipynb', 'gs://dl-platform-temp/notebook-ci-showcase/results/${BUILD_ID}/demo.ipynb']
+  args: ['cp', 'notebook.ipynb', 'gs://dl-platform-temp/notebook-ci-showcase/results/${BUILD_ID}/demo.ipynb']
   dir: 'notebooks-ci-showcase'
   entrypoint: '/bin/bash'
