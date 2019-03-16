@@ -5,7 +5,12 @@ steps:
   args: ['-c', './run_test.sh']
   dir: 'notebooks-ci-showcase'
   entrypoint: '/bin/bash'
+  secretEnv: ['API_KEY'] 
 - name: 'gcr.io/cloud-builders/gsutil'
   args: ['gsutil', 'cp', 'notebook.ipynb', 'gs://dl-platform-temp/notebook-ci-showcase/results/${BUILD_ID}/demo.ipynb']
   dir: 'notebooks-ci-showcase'
   entrypoint: '/bin/bash'
+secrets:
+- kmsKeyName: projects/deeplearning-platform/locations/global/keyRings/api_key/cryptoKeys/google_maps_api
+  secretEnv:
+    API_KEY: CiQAqOZsWlDTXTRk/yjMO1BmEwto8Kboq90JG9zOuhizXsVO6fQSUQD7A7YryCuYQ+t6h9IL9Of6M+qCg/SezgvB/efTAGHhfzOYqa9mNMlECMo5hgnzpNjq6pPCauASAy8+VB+H4SLOfT9drLlpQTgxW3zTpAxtTQ==
