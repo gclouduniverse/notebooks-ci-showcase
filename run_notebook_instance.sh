@@ -79,7 +79,7 @@ function execute_notebook_with_gpu() {
     fi
     OUTPUT_NOTEBOOK_GCS_FOLDER=$(output_for_mode ${TESTING_MODE} ${GCS_LOCATION})
     OUTPUT_NOTEBOOK_GCS_PATH="${OUTPUT_NOTEBOOK_GCS_FOLDER}/${NOTEBOOK_NAME}"
-    echo "Staging notebook: ${INUT_NOTEBOOK_GCS_PATH}"
+    echo "Staging notebook: ${INPUT_NOTEBOOK_GCS_PATH}"
     echo "Output notebook: ${OUTPUT_NOTEBOOK_GCS_PATH}"
     gsutil cp "${INPUT_NOTEBOOK}" "${INPUT_NOTEBOOK_GCS_PATH}"
     if [[ $? -eq 1 ]]; then
