@@ -49,7 +49,7 @@ if [[ "${PAPERMILL_EXIT_CODE}" -ne 0 ]]; then
   echo "Unable to execute notebook. Exit code: ${PAPERMILL_EXIT_CODE}"
   touch "${TEMPORARY_NOTEBOOK_PATH}/FAILED"
 else
-  cd ${TEMPORARY_NOTEBOOK_FOLDER}
+  cd "${TEMPORARY_NOTEBOOK_FOLDER}"
   jupyter nbconvert "${TEMPORARY_NOTEBOOK_PATH}"
   jupyter nbconvert "${TEMPORARY_NOTEBOOK_PATH}" --output "${OUTPUT_NOTEBOOK_CLEAN_NAME}" --TemplateExporter.exclude_input=True
 fi

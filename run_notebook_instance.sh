@@ -77,7 +77,7 @@ function execute_notebook_with_gpu() {
         gsutil cp "${PARAM_FILE}" "${INPUT_PARAM_GCS_PATH}"
         PARAM_METADATA=",parameters_file=${INPUT_PARAM_GCS_PATH}"
     fi
-    OUTPUT_NOTEBOOK_GCS_FOLDER=$(output_for_mode ${TESTING_MODE} ${GCS_LOCATION})
+    OUTPUT_NOTEBOOK_GCS_FOLDER=$(output_for_mode "${TESTING_MODE}" "${GCS_LOCATION}")
     OUTPUT_NOTEBOOK_GCS_PATH="${OUTPUT_NOTEBOOK_GCS_FOLDER}/${NOTEBOOK_NAME}"
     echo "Staging notebook: ${INPUT_NOTEBOOK_GCS_PATH}"
     echo "Output notebook: ${OUTPUT_NOTEBOOK_GCS_PATH}"
@@ -108,7 +108,7 @@ function execute_notebook_with_gpu() {
     fi
     wait_till_instance_not_exist "${INSTANCE_NAME}" "${ZONE}"
     echo "execution has been finished, checking result"
-    OUTPUT_CONTENTS=$(gsutil ls ${OUTPUT_NOTEBOOK_GCS_FOLDER})
+    OUTPUT_CONTENTS=$(gsutil ls "${OUTPUT_NOTEBOOK_GCS_FOLDER}")
     if [[ $? -ne 0 ]] || grep -q "FAILED" <<< "${OUTPUT_CONTENTS}"; then
         echo "Job failed or unable to get output."
         return 1
