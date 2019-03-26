@@ -2,6 +2,9 @@
 readonly BUILD_TIME=$(date +%s)
 readonly DEFAULT_NOTEBOOK_EXECUTOR_INSTANCE_NAME="notebookexecutor-${BUILD_TIME}"
 
+TESTING_MODE="false"
+PARAM_FILE=""
+
 while getopts ":tp:" opt; do
   case ${opt} in
     t )
