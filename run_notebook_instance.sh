@@ -27,9 +27,9 @@ function output_for_mode() {
     local TESTING_MODE=$1
     local GCS_LOCATION=$2
     if [[ "${TESTING_MODE}" == "true" ]]; then
-        return "${GCS_LOCATION}/results/${BUILD_TIME}"
+        echo "${GCS_LOCATION}/results/${BUILD_TIME}"
     else
-        return "${GCS_LOCATION}/versions/$(date +%Y-%m-%d)"
+        echo "${GCS_LOCATION}/versions/$(date +%Y-%m-%d)"
     fi
 }
 
@@ -79,6 +79,8 @@ function execute_notebook_with_gpu() {
     fi
     OUTPUT_NOTEBOOK_GCS_FOLDER=$(output_for_mode ${TESTING_MODE} ${GCS_LOCATION})
     OUTPUT_NOTEBOOK_GCS_PATH="${OUTPUT_NOTEBOOK_GCS_FOLDER}/${NOTEBOOK_NAME}"
+    echo "Staging notebook: ${INUT_NOTEBOOK_GCS_PATH}"
+    echo "Output notebook: ${OUTPUT_NOTEBOOK_GCS_PATH}"
     gsutil cp "${INPUT_NOTEBOOK}" "${INPUT_NOTEBOOK_GCS_PATH}"
     if [[ $? -eq 1 ]]; then
         echo "Upload to the temp GCS location (${INPUT_NOTEBOOK_GCS_PATH}) of the notebook (${INPUT_NOTEBOOK}) has failed."
