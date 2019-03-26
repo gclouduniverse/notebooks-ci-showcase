@@ -9,12 +9,14 @@ steps:
 - name: 'google/cloud-sdk:237.0.0'
   args: ['-c', 'tar -zcvf live.tar.gz demo.ipynb notebook_executor.sh run_notebook_instance.sh']
   dir: 'notebooks-ci-showcase'
+  entrypoint: '/bin/bash'
 - name: 'gcr.io/cloud-builders/gsutil'
   args: ['cp', 'live.tar.gz', 'gs://dl-platform-temp/notebook-ci-showcase/live.tar.gz']
   dir: 'notebooks-ci-showcase'
 - name: 'google/cloud-sdk:237.0.0'
   args: ['-c', 'tar -zcvf deploy.tar.gz *']
   dir: 'notebooks-ci-showcase/deploy'
+  entrypoint: '/bin/bash'
 - name: 'gcr.io/cloud-builders/gsutil'
   args: ['cp', 'live.tar.gz', 'gs://dl-platform-temp/notebook-ci-showcase/deploy.tar.gz']
   dir: 'notebooks-ci-showcase/deploy'
