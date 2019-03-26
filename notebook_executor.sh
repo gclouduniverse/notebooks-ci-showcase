@@ -11,7 +11,6 @@ fi
 readonly INPUT_NOTEBOOK_GCS_FILE=$(curl http://metadata.google.internal/computeMetadata/v1/instance/attributes/input_notebook -H "Metadata-Flavor: Google")
 readonly OUTPUT_NOTEBOOK_GCS_FOLDER=$(curl http://metadata.google.internal/computeMetadata/v1/instance/attributes/output_notebook -H "Metadata-Flavor: Google")
 readonly PARAMETERS_GCS_FILE=$(curl --fail http://metadata.google.internal/computeMetadata/v1/instance/attributes/parameters_file -H "Metadata-Flavor: Google")
-readonly TESTING_MODE=$(curl --fail http://metadata.google.internal/computeMetadata/v1/instance/attributes/testing_mode -H "Metadata-Flavor: Google")
 
 readonly TEMPORARY_NOTEBOOK_FOLDER="/tmp/notebook"
 mkdir "${TEMPORARY_NOTEBOOK_PATH}"
@@ -23,26 +22,15 @@ readonly TEMPORARY_NOTEBOOK_PATH="${TEMPORARY_NOTEBOOK_FOLDER}/${OUTPUT_NOTEBOOK
 PAPERMILL_EXIT_CODE=0
 if [[ -z "${PARAMETERS_GCS_FILE}" ]]; then
   echo "No input parameters present"
-  if [[ "${TESTING_MODE}" == "true" ]]; then
-    papermill "${INPUT_NOTEBOOK_PATH}" "${TEMPORARY_NOTEBOOK_PATH}"
-    PAPERMILL_EXIT_CODE=$?
-  else
-    papermill "${INPUT_NOTEBOOK_PATH}" "${TEMPORARY_NOTEBOOK_PATH}" --report-mode
-    PAPERMILL_EXIT_CODE=$?
-  fi
+  papermill "${INPUT_NOTEBOOK_PATH}" "${TEMPORARY_NOTEBOOK_PATH}"
 else
   echo "input parameters present"
   echo "GCS file with parameters: ${PARAMETERS_GCS_FILE}"
   gsutil cp "${PARAMETERS_GCS_FILE}" params.yaml
-  if [[ "${TESTING_MODE}" == "true" ]]; then
-    papermill "${INPUT_NOTEBOOK_PATH}" "${TEMPORARY_NOTEBOOK_PATH}" -f params.yaml
-    PAPERMILL_EXIT_CODE=$?
-  else
-    papermill "${INPUT_NOTEBOOK_PATH}" "${TEMPORARY_NOTEBOOK_PATH}" -f params.yaml --report-mode
-    PAPERMILL_EXIT_CODE=$?
-  fi
+  papermill "${INPUT_NOTEBOOK_PATH}" "${TEMPORARY_NOTEBOOK_PATH}" -f params.yaml
 fi
 
+PAPERMILL_EXIT_CODE=$?
 echo "Papermill exit code is: ${PAPERMILL_EXIT_CODE}"
 
 if [[ "${PAPERMILL_EXIT_CODE}" -ne 0 ]]; then
