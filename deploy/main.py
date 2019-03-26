@@ -17,7 +17,7 @@ base_deploy_request["source"] = {
     }
 }
 
-def startrun(request):
+def startrun(data, context):
     deploy_request = base_deploy_request.copy()
     
     # dataset does not have current information, use last year's info
