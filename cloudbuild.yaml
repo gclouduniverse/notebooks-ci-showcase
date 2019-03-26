@@ -18,7 +18,7 @@ steps:
   dir: 'notebooks-ci-showcase/deploy'
   entrypoint: '/bin/bash'
 - name: 'gcr.io/cloud-builders/gsutil'
-  args: ['cp', 'live.tar.gz', 'gs://dl-platform-temp/notebook-ci-showcase/deploy.tar.gz']
+  args: ['cp', 'deploy.tar.gz', 'gs://dl-platform-temp/notebook-ci-showcase/deploy.tar.gz']
   dir: 'notebooks-ci-showcase/deploy'
 secrets:
 - kmsKeyName: projects/deeplearning-platform/locations/global/keyRings/api_key/cryptoKeys/google_maps_api
