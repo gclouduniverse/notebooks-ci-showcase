@@ -1,3 +1,5 @@
+#!/bin/bash
+
 if lspci -vnn | grep NVIDIA > /dev/null 2>&1; then
   # Nvidia card found, need to check if driver is up
   if ! nvidia-smi > /dev/null 2>&1; then
@@ -21,7 +23,7 @@ readonly TEMPORARY_NOTEBOOK_PATH="${TEMPORARY_NOTEBOOK_FOLDER}/${OUTPUT_NOTEBOOK
 PAPERMILL_EXIT_CODE=0
 if [[ -z "${PARAMETERS_GCS_FILE}" ]]; then
   echo "No input parameters present"
-  if [[ -z "${TESTING_MODE}" ]]; then
+  if [[ "${TESTING_MODE}" == "true" ]]; then
     papermill "${INPUT_NOTEBOOK_PATH}" "${TEMPORARY_NOTEBOOK_PATH}"
     PAPERMILL_EXIT_CODE=$?
   else
@@ -32,7 +34,7 @@ else
   echo "input parameters present"
   echo "GCS file with parameters: ${PARAMETERS_GCS_FILE}"
   gsutil cp "${PARAMETERS_GCS_FILE}" params.yaml
-  if [[ -z "${TESTING_MODE}" ]]; then
+  if [[ "${TESTING_MODE}" == "true" ]]; then
     papermill "${INPUT_NOTEBOOK_PATH}" "${TEMPORARY_NOTEBOOK_PATH}" -f params.yaml
     PAPERMILL_EXIT_CODE=$?
   else

@@ -26,7 +26,7 @@ shift $((OPTIND -1))
 function output_for_mode() {
     local TESTING_MODE=$1
     local GCS_LOCATION=$2
-    if [[ "${TESTING_MODE}" -eq "true" ]]; then
+    if [[ "${TESTING_MODE}" == "true" ]]; then
         return "${GCS_LOCATION}/results/${BUILD_TIME}"
     else
         return "${GCS_LOCATION}/versions/$(date +%Y-%m-%d)"

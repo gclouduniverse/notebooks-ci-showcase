@@ -9,7 +9,7 @@ credentials = compute_engine.Credentials()
 build_client = googleapiclient.discovery.build('cloudbuild', 'v1', credentials=credentials)
 
 with open("deploy.yaml", "r") as f:
-    base_deploy_request = json.dumps(yaml.load(f))
+    base_deploy_request = yaml.load(f)
 base_deploy_request["source"] = {
     "storageSource": {
         "bucket": "dl-platform-temp",
@@ -24,7 +24,8 @@ def startrun(data, context):
     today = datetime.date.today() - datetime.timedelta(days=365)
     one_week_ago = today - datetime.timedelta(days=7)
     
-    deploy_request["substitutions"]["_START_DATE"] = one_week_ago
-    deploy_request["substitutions"]["_END_DATE"] = today
+    deploy_request["substitutions"]["_START_DATE"] = "{:%Y-%m-%d}".format(one_week_ago)
+    deploy_request["substitutions"]["_END_DATE"] = "{:%Y-%m-%d}".format(today)
     
     response = build_client.projects().builds().create(projectId="deeplearning-platform", body=deploy_request).execute()
+    return str(response)
