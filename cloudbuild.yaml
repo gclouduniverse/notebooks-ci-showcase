@@ -2,14 +2,22 @@ steps:
 - name: 'gcr.io/cloud-builders/git'
   args: ['clone', 'https://github.com/b0noI/notebooks-ci-showcase']
 - name: 'google/cloud-sdk:237.0.0'
-  args: ['-c', './run_test.sh']
+  args: ['-c', './run_notebook_instance.sh', '-t']
   dir: 'notebooks-ci-showcase'
   entrypoint: '/bin/bash'
   secretEnv: ['API_KEY'] 
-- name: 'gcr.io/cloud-builders/gsutil'
-  args: ['gsutil', 'cp', 'notebook.ipynb', 'gs://dl-platform-temp/notebook-ci-showcase/results/${BUILD_ID}/demo.ipynb']
+- name: 'google/cloud-sdk:237.0.0'
+  args: ['-c', 'tar -zcvf live.tar.gz demo.ipynb notebook_executor.sh run_notebook_instance.sh']
   dir: 'notebooks-ci-showcase'
-  entrypoint: '/bin/bash'
+- name: 'gcr.io/cloud-builders/gsutil'
+  args: ['cp', 'live.tar.gz', 'gs://dl-platform-temp/notebook-ci-showcase/live.tar.gz']
+  dir: 'notebooks-ci-showcase'
+- name: 'google/cloud-sdk:237.0.0'
+  args: ['-c', 'tar -zcvf deploy.tar.gz *']
+  dir: 'notebooks-ci-showcase/deploy'
+- name: 'gcr.io/cloud-builders/gsutil'
+  args: ['cp', 'live.tar.gz', 'gs://dl-platform-temp/notebook-ci-showcase/deploy.tar.gz']
+  dir: 'notebooks-ci-showcase/deploy'
 secrets:
 - kmsKeyName: projects/deeplearning-platform/locations/global/keyRings/api_key/cryptoKeys/google_maps_api
   secretEnv:
