@@ -2,7 +2,7 @@ steps:
 - name: 'gcr.io/cloud-builders/git'
   args: ['clone', 'https://github.com/b0noI/notebooks-ci-showcase']
 - name: 'google/cloud-sdk:237.0.0'
-  args: ['-c', './run_notebook_instance.sh', '-t']
+  args: ['-c', './run_notebook_instance.sh -t']
   dir: 'notebooks-ci-showcase'
   entrypoint: '/bin/bash'
   secretEnv: ['API_KEY'] 
