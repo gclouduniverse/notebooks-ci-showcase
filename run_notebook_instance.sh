@@ -104,15 +104,12 @@ function execute_notebook_with_gpu() {
     wait_till_instance_not_exist "${INSTANCE_NAME}" "${ZONE}"
     echo "execution has been finished, checking result"
     OUTPUT_CONTENTS=$(gsutil ls ${OUTPUT_NOTEBOOK_GCS_FOLDER})
-    if [[ $? -ne 0 ]] || $
+    if [[ $? -ne 0 ]] || grep -q "FAILED" <<< "${OUTPUT_CONTENTS}"; then
+        echo "Job failed or unable to get output."
+        return 1
+    fi
     echo "done"
     return 0
 }
 
-execute_notebook_with_gpu demo.ipynb gs://dl-platform-temp/notebook-ci-showcase p100 1 || exit 1
-
-if [[ -e "/tmp/FAILED" || ! -e "/tmp/${NOTEBOOK_NAME}" ]]; then
-   echo "errors in execution"
-   exit 1
-fi
-exit 0
+execute_notebook_with_gpu demo.ipynb gs://dl-platform-temp/notebook-ci-showcase p100 1
