@@ -14,12 +14,14 @@ steps:
   args: ['cp', 'live.tar.gz', 'gs://dl-platform-temp/notebook-ci-showcase/live.tar.gz']
   dir: 'notebooks-ci-showcase'
 - name: 'google/cloud-sdk:237.0.0'
-  args: ['-c', 'tar -zcvf deploy.tar.gz *']
+  args: ['-c', 'zip deploy.zip *']
   dir: 'notebooks-ci-showcase/deploy'
   entrypoint: '/bin/bash'
 - name: 'gcr.io/cloud-builders/gsutil'
-  args: ['cp', 'deploy.tar.gz', 'gs://dl-platform-temp/notebook-ci-showcase/deploy.tar.gz']
+  args: ['cp', 'deploy.zip', 'gs://dl-platform-temp/notebook-ci-showcase/deploy.zip']
   dir: 'notebooks-ci-showcase/deploy'
+- name: 'google/cloud-sdk:237.0.0'
+  args: ['gcloud', 'functions', 'deploy', 'demo-notebook-function', '--region=us-central1']
 secrets:
 - kmsKeyName: projects/deeplearning-platform/locations/global/keyRings/api_key/cryptoKeys/google_maps_api
   secretEnv:
