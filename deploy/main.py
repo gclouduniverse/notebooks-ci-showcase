@@ -1,4 +1,5 @@
-from datetime import datetime, timedelta
+from datetime import timedelta
+from dateutil import parser
 import json
 import yaml
 
@@ -22,10 +23,10 @@ def startrun(data, context):
     
     if data and "today" in data:
         # "today" specified in cloud function invocation, use defined date
-        today = datetime.strptime(data["today"], "%Y-%m-%d")
+        today = parser.parse(data["today"])
     else:
         # dataset does not have current information, use last year's info
-        today = datetime.fromisoformat(context.timestamp) - timedelta(days=365)
+        today = parser.parse(context.timestamp) - timedelta(days=365)
 
     one_week_ago = today - timedelta(days=7)
     
