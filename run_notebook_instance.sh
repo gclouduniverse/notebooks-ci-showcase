@@ -6,7 +6,7 @@ TESTING_MODE="false"
 PARAM_FILE=""
 OUTPUT_DATE=""
 
-while getopts ":tp:" opt; do
+while getopts ":tp:o:" opt; do
   case ${opt} in
     t )
       TESTING_MODE="true"
