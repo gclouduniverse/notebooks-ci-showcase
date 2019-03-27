@@ -40,7 +40,7 @@ else
   jupyter nbconvert "${TEMPORARY_NOTEBOOK_PATH}" --output "${OUTPUT_NOTEBOOK_CLEAN_NAME}" --TemplateExporter.exclude_input=True
 fi
 
-gsutil cp -r "${TEMPORARY_NOTEBOOK_FOLDER}" "${OUTPUT_NOTEBOOK_GCS_FOLDER}"
+gsutil rsync -r "${TEMPORARY_NOTEBOOK_FOLDER}" "${OUTPUT_NOTEBOOK_GCS_FOLDER}"
 
 readonly INSTANCE_NAME=$(curl http://metadata.google.internal/computeMetadata/v1/instance/name -H "Metadata-Flavor: Google")
 INSTANCE_ZONE="/"$(curl http://metadata.google.internal/computeMetadata/v1/instance/zone -H "Metadata-Flavor: Google")

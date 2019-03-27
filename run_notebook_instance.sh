@@ -4,6 +4,7 @@ readonly DEFAULT_NOTEBOOK_EXECUTOR_INSTANCE_NAME="notebookexecutor-${BUILD_TIME}
 
 TESTING_MODE="false"
 PARAM_FILE=""
+OUTPUT_DATE=""
 
 while getopts ":tp:" opt; do
   case ${opt} in
@@ -12,6 +13,9 @@ while getopts ":tp:" opt; do
       ;;
     p )
       PARAM_FILE=$OPTARG
+      ;;
+    o )
+      OUTPUT_DATE=$OPTARG
       ;;
     \? )
       echo "Invalid option: $OPTARG" 1>&2
@@ -26,10 +30,11 @@ shift $((OPTIND -1))
 function output_for_mode() {
     local TESTING_MODE=$1
     local GCS_LOCATION=$2
+    local OUTPUT_DATE=$3
     if [[ "${TESTING_MODE}" == "true" ]]; then
         echo "${GCS_LOCATION}/results/${BUILD_TIME}"
     else
-        echo "${GCS_LOCATION}/versions/$(date +%Y-%m-%d)"
+        echo "${GCS_LOCATION}/versions/${OUTPUT_DATE}"
     fi
 }
 
@@ -77,7 +82,7 @@ function execute_notebook_with_gpu() {
         gsutil cp "${PARAM_FILE}" "${INPUT_PARAM_GCS_PATH}"
         PARAM_METADATA=",parameters_file=${INPUT_PARAM_GCS_PATH}"
     fi
-    OUTPUT_NOTEBOOK_GCS_FOLDER=$(output_for_mode "${TESTING_MODE}" "${GCS_LOCATION}")
+    OUTPUT_NOTEBOOK_GCS_FOLDER=$(output_for_mode "${TESTING_MODE}" "${GCS_LOCATION}" "${OUTPUT_DATE}")
     OUTPUT_NOTEBOOK_GCS_PATH="${OUTPUT_NOTEBOOK_GCS_FOLDER}/${NOTEBOOK_NAME}"
     echo "Staging notebook: ${INPUT_NOTEBOOK_GCS_PATH}"
     echo "Output notebook: ${OUTPUT_NOTEBOOK_GCS_PATH}"

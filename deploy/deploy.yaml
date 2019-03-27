@@ -3,7 +3,7 @@ steps:
   args: ['-c', 'printf "start_date: \"${_START_DATE}\"\nend_date: \"${_END_DATE}\"" > params.yaml']
   entrypoint: '/bin/bash'
 - name: 'google/cloud-sdk:237.0.0'
-  args: ['-c', './run_notebook_instance.sh -p params.yaml']
+  args: ['-c', './run_notebook_instance.sh -p params.yaml -o "${_END_DATE}"']
   entrypoint: '/bin/bash'
   secretEnv: ['API_KEY']
 substitutions:

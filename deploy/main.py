@@ -1,4 +1,4 @@
-import datetime
+from datetime import datetime, timedelta
 import json
 import yaml
 
@@ -20,9 +20,14 @@ base_deploy_request["source"] = {
 def startrun(data, context):
     deploy_request = base_deploy_request.copy()
     
-    # dataset does not have current information, use last year's info
-    today = datetime.date.today() - datetime.timedelta(days=365)
-    one_week_ago = today - datetime.timedelta(days=7)
+    if data and "today" in data:
+        # "today" specified in cloud function invocation, use defined date
+        today = datetime.strptime(data["today"], "%Y-%m-%d")
+    else:
+        # dataset does not have current information, use last year's info
+        today = datetime.fromisoformat(context.timestamp) - timedelta(days=365)
+
+    one_week_ago = today - timedelta(days=7)
     
     deploy_request["substitutions"]["_START_DATE"] = "{:%Y-%m-%d}".format(one_week_ago)
     deploy_request["substitutions"]["_END_DATE"] = "{:%Y-%m-%d}".format(today)
