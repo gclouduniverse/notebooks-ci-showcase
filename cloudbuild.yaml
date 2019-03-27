@@ -20,6 +20,7 @@ steps:
 - name: 'gcr.io/cloud-builders/gsutil'
   args: ['cp', 'deploy.zip', 'gs://dl-platform-temp/notebook-ci-showcase/deploy.zip']
   dir: 'notebooks-ci-showcase/deploy'
+# For the next step, the cloud build service account must be granted the Cloud Functions Developer permission (not default).
 - name: 'google/cloud-sdk:237.0.0'
   args: ['gcloud', 'functions', 'deploy', 'demo-notebook-function', '--region=us-central1', '--source=gs://dl-platform-temp/notebook-ci-showcase/deploy.zip']
 secrets:
