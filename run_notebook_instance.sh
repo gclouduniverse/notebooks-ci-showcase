@@ -99,7 +99,7 @@ function execute_notebook_with_gpu() {
             --boot-disk-size=200GB \
             --scopes=https://www.googleapis.com/auth/cloud-platform \
             --metadata="api_key=${API_KEY},input_notebook=${INPUT_NOTEBOOK_GCS_PATH},output_notebook=${OUTPUT_NOTEBOOK_GCS_FOLDER}${PARAM_METADATA:-}" \
-            --metadata-from-file="gcp-notebook-executor/startup-script=notebook_executor.sh" \
+            --metadata-from-file="startup-script=gcp-notebook-executor/notebook_executor.sh" \
             --quiet
     if [[ $? -eq 1 ]]; then
         echo "Creation of background instance for training has failed."
