@@ -35,7 +35,7 @@ steps:
   #
   #  Next step creates an archive with notebook executor.
 - name: 'google/cloud-sdk:237.0.0'
-  args: ['-c', 'tar -zcvf live.tar.gz demo.ipynb gcp-notebook-executor/notebook_executor.sh run_notebook_instance.sh']
+  args: ['-c', 'tar -zcvf live.tar.gz demo.ipynb gcp-notebook-executor/notebook_executor.sh gcp-notebook-executor/utils.sh run_notebook_instance.sh']
   dir: 'notebooks-ci-showcase'
   entrypoint: '/bin/bash'
   # Archive uploaded to the place where the production system expects it.

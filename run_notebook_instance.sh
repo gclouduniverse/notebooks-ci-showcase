@@ -1,4 +1,7 @@
 #!/bin/bash -u
+
+source gcp-notebook-executor/utils.sh
+
 readonly BUILD_TIME=$(date +%s)
 readonly DEFAULT_NOTEBOOK_EXECUTOR_INSTANCE_NAME="notebookexecutor-${BUILD_TIME}"
 
@@ -36,22 +39,6 @@ function output_for_mode() {
     else
         echo "${GCS_LOCATION}/versions/${OUTPUT_DATE}"
     fi
-}
-
-function wait_till_instance_not_exist() {
-    local INSTANCE_NAME=$1
-    local ZONE=$2
-    if [ "$#" -ne 2 ]; then
-        echo "Usage: "
-        echo "   ./wait_till_instance_not_exist [INSTANCE_NAME] [ZONE]"
-        echo ""
-        echo "example:"
-        echo "   ./wait_till_instance_not_exist instance1 us-west1-b"
-        echo ""
-        return 1
-    fi
-    gcloud compute instances tail-serial-port-output "${INSTANCE_NAME}" --zone="${ZONE}" || true
-    return 0
 }
 
 function execute_notebook_with_gpu() {
