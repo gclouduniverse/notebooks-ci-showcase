@@ -50,14 +50,8 @@ function wait_till_instance_not_exist() {
         echo ""
         return 1
     fi
-    while true; do
-        if gcloud compute instances describe "${INSTANCE_NAME}" --zone="${ZONE}" > /dev/null; then
-            echo "Background execution still in progress, going to sleep 10sec..."
-            sleep 10
-            continue
-        fi
-        return 0
-    done
+    gcloud compute instances get-serial-port-output "${INSTANCE_NAME}" --zone="${ZONE}"
+    return 0
 }
 
 function execute_notebook_with_gpu() {
