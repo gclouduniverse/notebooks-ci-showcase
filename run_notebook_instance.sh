@@ -50,7 +50,7 @@ function wait_till_instance_not_exist() {
         echo ""
         return 1
     fi
-    gcloud compute instances get-serial-port-output "${INSTANCE_NAME}" --zone="${ZONE}"
+    gcloud compute instances get-serial-port-output "${INSTANCE_NAME}" --zone="${ZONE}" || true
     return 0
 }
 
