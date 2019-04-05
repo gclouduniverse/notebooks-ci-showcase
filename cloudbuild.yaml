@@ -2,6 +2,8 @@
 # https://cloud.google.com/cloud-build/docs/
 # All these steps sharing a filesystem between each other.
 steps:
+# ↓↓↓↓↓↓↓ Start of Continues Integration Part ↓↓↓↓↓↓↓↓↓↓↓↓ #####
+######### This part will test if Notebook fully executable #####
   # First, we need to clone the repository that we need to test.
   # This will also clone submodules that are used as dependancies.
 - name: 'gcr.io/cloud-builders/git'
@@ -19,7 +21,14 @@ steps:
   args: ['-c', './run_notebook_instance.sh -t']
   dir: 'notebooks-ci-showcase'
   entrypoint: '/bin/bash'
+  # Secret is needed since we are using Google Map API Key in the Notebook. Notebook just reads the key from the env variables.
+  # You can read more about Cloud Build Secrets here:
+  # https://cloud.google.com/cloud-build/docs/securing-builds/use-encrypted-secrets-credentials
   secretEnv: ['API_KEY'] 
+# ↑↑↑↑↑↑↑ End of Continues Integration Part ↑↑↑↑↑↑↑↑↑↑↑↑↑###############
+######### Execution will not process further if notebook is broken #####
+# ↓↓↓↓↓↓↓ Start of Continues Delivery Part ↓↓↓↓↓↓↓↓↓↓↓↓ ################
+######### This part will generate actual artifact  #####################
 - name: 'google/cloud-sdk:237.0.0'
   args: ['-c', 'tar -zcvf live.tar.gz demo.ipynb gcp-notebook-executor/notebook_executor.sh run_notebook_instance.sh']
   dir: 'notebooks-ci-showcase'
@@ -34,9 +43,11 @@ steps:
 - name: 'gcr.io/cloud-builders/gsutil'
   args: ['cp', 'deploy.zip', 'gs://dl-platform-temp/notebook-ci-showcase/deploy.zip']
   dir: 'notebooks-ci-showcase/deploy'
-# For the next step, the cloud build service account must be granted the Cloud Functions Developer permission (not default).
+  # For the next step, the cloud build service account must be granted the Cloud Functions Developer permission (not default).
 - name: 'google/cloud-sdk:237.0.0'
   args: ['gcloud', 'functions', 'deploy', 'demo-notebook-function', '--region=us-central1', '--source=gs://dl-platform-temp/notebook-ci-showcase/deploy.zip']
+# ↑↑↑↑↑↑↑ End of Continues Delivery Part ↑↑↑↑↑↑↑↑↑↑↑↑↑##################
+######### This part will generate actual artifact  #####################
 secrets:
 - kmsKeyName: projects/deeplearning-platform/locations/global/keyRings/api_key/cryptoKeys/google_maps_api
   secretEnv:
