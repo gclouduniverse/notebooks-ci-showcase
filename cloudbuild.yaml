@@ -18,7 +18,7 @@ steps:
   # You can read more about the background execution here:
   # https://blog.kovalevskyi.com/how-to-submit-jupyter-notebook-for-overnight-training-on-gcp-4ce1b0cd4d0d
 - name: 'google/cloud-sdk:237.0.0'
-  args: ['-c', './run_notebook_instance.sh -t']
+  args: ['-c', './run_test.sh']
   dir: 'notebooks-ci-showcase'
   entrypoint: '/bin/bash'
   # Secret is needed since we are using Google Map API Key in the Notebook. Notebook just reads the key from the env variables.
