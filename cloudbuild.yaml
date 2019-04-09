@@ -53,8 +53,8 @@ steps:
   dir: 'notebooks-ci-showcase/deploy'
   # For the next step, the cloud build service account must be granted the Cloud Functions Developer permission (not default).
 - name: 'google/cloud-sdk:237.0.0'
-  args: ['gcloud', 'functions', 'deploy', 'demo-notebook-function', '--region=us-central1', '--source=gs://dl-platform-temp/notebook-ci-showcase/deploy.zip']
-# ↑↑↑↑↑↑↑ End of Continuous Delivery Part ↑↑↑↑↑↑↑↑↑↑↑↑↑##################
+  args: ['gcloud', 'functions', 'deploy', 'demo-notebook-function', '--trigger-topic=demo-notebook', '--region=us-central1', '--source=gs://dl-platform-temp/notebook-ci-showcase/deploy.zip']
+# ↑↑↑↑↑↑↑ End of Continues Delivery Part ↑↑↑↑↑↑↑↑↑↑↑↑↑##################
 ######### This part will generate actual artifact  #####################
 secrets:
 - kmsKeyName: projects/deeplearning-platform/locations/global/keyRings/api_key/cryptoKeys/google_maps_api
