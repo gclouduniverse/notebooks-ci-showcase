@@ -2,7 +2,7 @@
 # https://cloud.google.com/cloud-build/docs/
 # All these steps sharing a filesystem between each other.
 steps:
-# ↓↓↓↓↓↓↓ Start of Continues Integration Part ↓↓↓↓↓↓↓↓↓↓↓↓ #####
+# ↓↓↓↓↓↓↓ Start of Continuous Integration Part ↓↓↓↓↓↓↓↓↓↓↓↓ #####
 ######### This part will test if Notebook fully executable #####
   # First, we need to clone the repository that we need to test.
   # This will also clone submodules that are used as dependancies.
@@ -25,9 +25,9 @@ steps:
   # You can read more about Cloud Build Secrets here:
   # https://cloud.google.com/cloud-build/docs/securing-builds/use-encrypted-secrets-credentials
   secretEnv: ['API_KEY'] 
-# ↑↑↑↑↑↑↑ End of Continues Integration Part ↑↑↑↑↑↑↑↑↑↑↑↑↑###############
+# ↑↑↑↑↑↑↑ End of Continuous Integration Part ↑↑↑↑↑↑↑↑↑↑↑↑↑###############
 ######### Execution will not process further if notebook is broken #####
-# ↓↓↓↓↓↓↓ Start of Continues Delivery Part ↓↓↓↓↓↓↓↓↓↓↓↓ ################
+# ↓↓↓↓↓↓↓ Start of Continuous Delivery Part ↓↓↓↓↓↓↓↓↓↓↓↓ ################
 ######### This part will generate actual artifact  #####################
   # Our production system contains 2 parts
   # * Cloud function that can execute notebook daily
@@ -54,7 +54,7 @@ steps:
   # For the next step, the cloud build service account must be granted the Cloud Functions Developer permission (not default).
 - name: 'google/cloud-sdk:237.0.0'
   args: ['gcloud', 'functions', 'deploy', 'demo-notebook-function', '--region=us-central1', '--source=gs://dl-platform-temp/notebook-ci-showcase/deploy.zip']
-# ↑↑↑↑↑↑↑ End of Continues Delivery Part ↑↑↑↑↑↑↑↑↑↑↑↑↑##################
+# ↑↑↑↑↑↑↑ End of Continuous Delivery Part ↑↑↑↑↑↑↑↑↑↑↑↑↑##################
 ######### This part will generate actual artifact  #####################
 secrets:
 - kmsKeyName: projects/deeplearning-platform/locations/global/keyRings/api_key/cryptoKeys/google_maps_api
