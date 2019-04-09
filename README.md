@@ -1,6 +1,6 @@
 # Fully Configured Example of CI/CD For Notebooks On Top Of GCP
 
-This repository includes fully functional Continues integration && Continues delivery systems for [Jupyter](https://jupyter.org/) Notebooks. 
+This repository includes fully functional Continuous integration && Continuous delivery systems for [Jupyter](https://jupyter.org/) Notebooks. 
 
 The main purpose of the repository to be a reference example of the implementation that can be easily replicated for other repositories when needed. The repository contains one notebook ```demo.ipynb```, and code for CI/CD for that notebook.
 
@@ -22,7 +22,7 @@ Optional, depends on your setup:
 
 Rest of the document explains how exactly this CI/CD works.
 
-# Continues Integration (CI)
+# Continuous Integration (CI)
 
 On the high-level CI system looks like this:
 
