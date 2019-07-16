@@ -1,3 +1,6 @@
+## Note
+For **latest** version of this project please take a look [here](https://github.com/GoogleCloudPlatform/ai-platform-samples/tree/master/notebooks/notebooks-ci-showcase)
+
 # Fully Configured Example of CI/CD for Notebooks on Top of Google Cloud Platform
 
 This repository includes a fully functional continuous integration and continuous deployment system for [Jupyter Notebooks](https://jupyter.org/). 
