@@ -2,7 +2,7 @@
 # https://cloud.google.com/cloud-build/docs/
 # All these steps sharing a filesystem between each other.
 steps:
-# ↓↓↓↓↓↓↓ Start of Continues Integration Part ↓↓↓↓↓↓↓↓↓↓↓↓ #####
+# ↓↓↓↓↓↓↓ Start of Continuous Integration Part ↓↓↓↓↓↓↓↓↓↓↓↓ #####
 ######### This part will test if Notebook fully executable #####
   # First, we need to clone the repository that we need to test.
   # This will also clone submodules that are used as dependancies.
@@ -18,16 +18,16 @@ steps:
   # You can read more about the background execution here:
   # https://blog.kovalevskyi.com/how-to-submit-jupyter-notebook-for-overnight-training-on-gcp-4ce1b0cd4d0d
 - name: 'google/cloud-sdk:237.0.0'
-  args: ['-c', './run_notebook_instance.sh -t']
+  args: ['-c', './run_test.sh']
   dir: 'notebooks-ci-showcase'
   entrypoint: '/bin/bash'
   # Secret is needed since we are using Google Map API Key in the Notebook. Notebook just reads the key from the env variables.
   # You can read more about Cloud Build Secrets here:
   # https://cloud.google.com/cloud-build/docs/securing-builds/use-encrypted-secrets-credentials
   secretEnv: ['API_KEY'] 
-# ↑↑↑↑↑↑↑ End of Continues Integration Part ↑↑↑↑↑↑↑↑↑↑↑↑↑###############
+# ↑↑↑↑↑↑↑ End of Continuous Integration Part ↑↑↑↑↑↑↑↑↑↑↑↑↑###############
 ######### Execution will not process further if notebook is broken #####
-# ↓↓↓↓↓↓↓ Start of Continues Delivery Part ↓↓↓↓↓↓↓↓↓↓↓↓ ################
+# ↓↓↓↓↓↓↓ Start of Continuous Delivery Part ↓↓↓↓↓↓↓↓↓↓↓↓ ################
 ######### This part will generate actual artifact  #####################
   # Our production system contains 2 parts
   # * Cloud function that can execute notebook daily
@@ -53,7 +53,7 @@ steps:
   dir: 'notebooks-ci-showcase/deploy'
   # For the next step, the cloud build service account must be granted the Cloud Functions Developer permission (not default).
 - name: 'google/cloud-sdk:237.0.0'
-  args: ['gcloud', 'functions', 'deploy', 'demo-notebook-function', '--region=us-central1', '--source=gs://dl-platform-temp/notebook-ci-showcase/deploy.zip']
+  args: ['gcloud', 'functions', 'deploy', 'demo-notebook-function', '--trigger-topic=demo-notebook', '--region=us-central1', '--source=gs://dl-platform-temp/notebook-ci-showcase/deploy.zip']
 # ↑↑↑↑↑↑↑ End of Continues Delivery Part ↑↑↑↑↑↑↑↑↑↑↑↑↑##################
 ######### This part will generate actual artifact  #####################
 secrets:
