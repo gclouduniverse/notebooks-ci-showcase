@@ -1,7 +1,7 @@
 #!/bin/bash -u
 
 NOTEBOOK_GCS_PATH="gs://notebooks-ci/demo.ipynb"
-NOTEBOOK_OUT_GCS_PATH="gs:/notebooks-ci/demo-out.ipynb"
+NOTEBOOK_OUT_GCS_PATH="gs://notebooks-ci/demo-out.ipynb"
 
 gsutil cp ./demo.ipynb "${NOTEBOOK_GCS_PATH}"
 
