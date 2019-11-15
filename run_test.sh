@@ -16,3 +16,6 @@ gcloud beta ai-platform jobs submit training "${JOB_NAME}" \
   -- nbexecutor \
   --input-notebook "${NOTEBOOK_GCS_PATH}" \
   --output-notebook "${NOTEBOOK_OUT_GCS_PATH}"
+
+echo "notebook has finished"
+exit 0
