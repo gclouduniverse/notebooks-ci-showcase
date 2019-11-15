@@ -17,19 +17,6 @@ gcloud ai-platform jobs submit training "${JOB_NAME}" \
   --input-notebook "${NOTEBOOK_GCS_PATH}" \
   --output-notebook "${NOTEBOOK_OUT_GCS_PATH}"
 
-#
-#while [[ $(gcloud ai-platform jobs describe "${JOB_NAME}" | grep "PREPARING") ]]
-#do
-#    echo "still preparing"
-#    sleep 10
-#done
-#
-#while [[ $(gcloud ai-platform jobs describe "${JOB_NAME}" | grep "RUNNING") ]]
-#do
-#    echo "still running"
-#    sleep 10
-#done
-
 if [[  $(gcloud ai-platform jobs describe "${JOB_NAME}" | grep "SUCCEEDED") ]]; then
     exit 0
 else

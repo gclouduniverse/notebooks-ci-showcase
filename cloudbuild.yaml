@@ -16,6 +16,6 @@ steps:
   args: ['./SelfContainedJupyterNotebooks/utils/get_docker_tag.py', '--path', 'demo.ipynb', '--out-path', './container_uri', '--test']
   dir: 'notebooks-ci-showcase'
   entrypoint: 'python'
-- name: 'google/cloud-sdk:271.0.0'
+- name: 'gcr.io/deeplearning-platform-release/base-cpu:m39'
   dir: 'notebooks-ci-showcase'
   entrypoint: './run_test.sh'
