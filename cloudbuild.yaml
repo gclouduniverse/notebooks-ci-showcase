@@ -17,6 +17,5 @@ steps:
   dir: 'notebooks-ci-showcase'
   entrypoint: 'python'
 - name: 'google/cloud-sdk:271.0.0'
-  args: ['-c', './run_test.sh']
   dir: 'notebooks-ci-showcase'
-  entrypoint: '/bin/bash'
+  entrypoint: './run_test.sh'
