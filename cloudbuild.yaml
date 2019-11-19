@@ -19,3 +19,4 @@ steps:
 - name: 'gcr.io/deeplearning-platform-release/base-cpu:m39'
   dir: 'notebooks-ci-showcase'
   entrypoint: './run_test.sh'
+timeout: 1200s

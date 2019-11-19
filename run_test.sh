@@ -16,6 +16,8 @@ gcloud ai-platform jobs submit training "${JOB_NAME}" \
   -- nbexecutor \
   --input-notebook "${NOTEBOOK_GCS_PATH}" \
   --output-notebook "${NOTEBOOK_OUT_GCS_PATH}"
+  
+echo "out: ${NOTEBOOK_OUT_GCS_PATH}"
 
 if [[  $(gcloud ai-platform jobs describe "${JOB_NAME}" | grep "SUCCEEDED") ]]; then
     exit 0
