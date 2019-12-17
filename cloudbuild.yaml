@@ -14,15 +14,15 @@ steps:
   id: 'checkout'
   args: ['checkout', '$COMMIT_SHA']
   dir: 'notebooks-ci-showcase'
-- name: 'gcr.io/deeplearning-platform-release/base-cpu:m39'
+- name: 'gcr.io/deeplearning-platform-release/tf-cpu.1-15:m39'
   id: 'clean'
   dir: 'notebooks-ci-showcase'
-  args: [notebooks/clean.ipynb, basic]
-  entrypoint: './schedule_notebook.sh'
+  args: [--input-notebook, notebooks/clean.ipynb, --output-notebook, notebooks/clean-out.ipynb]
+  entrypoint: 'nbexecutor'
 - name: 'gcr.io/deeplearning-platform-release/base-cpu:m39'
   id: 'train'
   dir: 'notebooks-ci-showcase'
-  args: [notebooks/train.ipynb, basic-gpu]
+  args: [notebooks/train.ipynb, basic-gpu, gcr.io/deeplearning-platform-release/tf-gpu.1-15:m39]
   entrypoint: './schedule_notebook.sh'
 - name: 'gcr.io/deeplearning-platform-release/base-cpu:m39'
   id: 'deploy'

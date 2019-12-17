@@ -2,6 +2,7 @@
 
 NOTEBOOK_FILE_NAME="${1}"
 SCALE_TIER="${2}"
+CONTAINER_URI="${3}"
 
 NOTEBOOK_GCS_PATH="gs://caip_notebooks_demo_temp/${NOTEBOOK_FILE_NAME}"
 NOTEBOOK_OUT_GCS_PATH="gs://caip_notebooks_demo_temp/out-${NOTEBOOK_FILE_NAME}"
@@ -14,7 +15,7 @@ REGION="us-central1"
 gcloud ai-platform jobs submit training "${JOB_NAME}" \
   --region "${REGION}" \
   --scale-tier "${SCALE_TIER}" \
-  --master-image-uri gcr.io/deeplearning-platform-release/tf-gpu.1-15 \
+  --master-image-uri "${CONTAINER_URI}" \
   --stream-logs \
   -- nbexecutor \
   --input-notebook "${NOTEBOOK_GCS_PATH}" \
