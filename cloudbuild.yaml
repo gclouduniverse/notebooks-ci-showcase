@@ -23,15 +23,15 @@ steps:
   id: 'clean'
   dir: 'notebooks-ci-showcase'
   args: [notebooks/clean.ipynb]
-  entrypoint: './run_test.sh'
+  entrypoint: './schedule_notebook.sh'
 - name: 'gcr.io/deeplearning-platform-release/base-cpu:m39'
   id: 'train'
   dir: 'notebooks-ci-showcase'
   args: [notebooks/train.ipynb]
-  entrypoint: './run_test.sh'
+  entrypoint: './schedule_notebook.sh'
 - name: 'gcr.io/deeplearning-platform-release/base-cpu:m39'
   id: 'deploy'
   dir: 'notebooks-ci-showcase'
-  args: ['--version']
-  entrypoint: 'gcloud'
+  args: ['$COMMIT_SHA']
+  entrypoint: './deployg_model_for_inference.sh'
 timeout: 1200s
