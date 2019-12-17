@@ -1,6 +1,7 @@
 #!/bin/bash -u
 
 NOTEBOOK_FILE_NAME="${1}"
+SCALE_TIER="${2}"
 
 NOTEBOOK_GCS_PATH="gs://caip_notebooks_demo_temp/${NOTEBOOK_FILE_NAME}"
 NOTEBOOK_OUT_GCS_PATH="gs://caip_notebooks_demo_temp/out-${NOTEBOOK_FILE_NAME}"
@@ -10,10 +11,10 @@ gsutil cp ./demo.ipynb "${NOTEBOOK_GCS_PATH}"
 UUID=$(cat /proc/sys/kernel/random/uuid)
 JOB_NAME=$(echo "demo-nb-run-${UUID}" | tr '-' '_')
 REGION="us-central1"
-IMAGE_NAME=$(<container_uri)
 gcloud ai-platform jobs submit training "${JOB_NAME}" \
   --region "${REGION}" \
-  --master-image-uri "${IMAGE_NAME}" \
+  --scale-tier "${SCALE_TIER}" \
+  --master-image-uri gcr.io/deeplearning-platform-release/tf-gpu.1-15 \
   --stream-logs \
   -- nbexecutor \
   --input-notebook "${NOTEBOOK_GCS_PATH}" \
