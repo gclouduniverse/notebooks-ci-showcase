@@ -2,8 +2,8 @@
 
 NOTEBOOK_FILE_NAME="${1}"
 
-NOTEBOOK_GCS_PATH="gs://notebooks-ci/${NOTEBOOK_FILE_NAME}"
-NOTEBOOK_OUT_GCS_PATH="gs://notebooks-ci/out-${NOTEBOOK_FILE_NAME}"
+NOTEBOOK_GCS_PATH="gs://caip_notebooks_demo_temp/${NOTEBOOK_FILE_NAME}"
+NOTEBOOK_OUT_GCS_PATH="gs://caip_notebooks_demo_temp/out-${NOTEBOOK_FILE_NAME}"
 
 gsutil cp ./demo.ipynb "${NOTEBOOK_GCS_PATH}"
 
