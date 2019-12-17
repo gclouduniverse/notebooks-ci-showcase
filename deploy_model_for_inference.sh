@@ -10,14 +10,6 @@ readonly FRAMEWORK="tensorflow"
 # One time operaion for creating new model
 # gcloud ai-platform models create "${MODEL_NAME}" --project "${PROJECT_ID}"
 
-readonly MODEL_FILE_PATH=$(find "./saved_model" | grep "saved_model.pb")
-readonly LOCAL_MODEL_DIR=$(dirname "${MODEL_FILE_PATH}")
-
-# Removing old model (just in case)
-gsutil rm -rf "${GCS_MODEL_DIR}"
-# Uploading latest model
-gsutil cp -r "${LOCAL_MODEL_DIR}/*" "${GCS_MODEL_DIR}"
-
 gcloud ai-platform versions create "${VERSION_NAME}" \
   --model "${MODEL_NAME}" \
   --origin "${GCS_MODEL_DIR}" \
