@@ -22,12 +22,12 @@ steps:
 - name: 'gcr.io/deeplearning-platform-release/base-cpu:m39'
   id: 'clean'
   dir: 'notebooks-ci-showcase'
-  args: [demo.ipynb]
+  args: [notebooks/clean.ipynb]
   entrypoint: './run_test.sh'
 - name: 'gcr.io/deeplearning-platform-release/base-cpu:m39'
   id: 'train'
   dir: 'notebooks-ci-showcase'
-  args: [demo.ipynb]
+  args: [notebooks/train.ipynb]
   entrypoint: './run_test.sh'
 - name: 'gcr.io/deeplearning-platform-release/base-cpu:m39'
   id: 'deploy'
