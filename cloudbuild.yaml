@@ -28,5 +28,5 @@ steps:
   id: 'deploy'
   dir: 'notebooks-ci-showcase'
   args: ['$COMMIT_SHA']
-  entrypoint: './deployg_model_for_inference.sh'
+  entrypoint: './deploy_model_for_inference.sh'
 timeout: 2400s
