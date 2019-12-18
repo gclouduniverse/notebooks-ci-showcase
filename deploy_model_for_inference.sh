@@ -4,7 +4,7 @@ readonly MODEL_NAME="test_model"
 readonly COMMIT="${1}"
 readonly COMMIT_SUB_STRING_FOR_VERSION=$(echo ${COMMIT} | cut -c1-5)
 # Date is required for the cases when same commit deployment happesn twice
-readonly VERSION_NAME="commit-${COMMIT_SUB_STRING_FOR_VERSION}-$(date +%m-%d-%Y-%M-%S)"
+readonly VERSION_NAME="commit_${COMMIT_SUB_STRING_FOR_VERSION}_$(date +%m_%d_%Y_%M%S)"
 readonly FRAMEWORK="tensorflow"
 
 # One time operaion for creating new model
@@ -19,4 +19,4 @@ gcloud ai-platform versions create "${VERSION_NAME}" \
   --project "${PROJECT_ID}"
 
 # Cleaning
-gsutil rm -rf "${GCS_MODEL_DIR}"
+# gsutil rm -rf "${GCS_MODEL_DIR}"
