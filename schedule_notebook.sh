@@ -7,7 +7,7 @@ CONTAINER_URI="${3}"
 NOTEBOOK_GCS_PATH="gs://caip_notebooks_demo_temp/${NOTEBOOK_FILE_NAME}"
 NOTEBOOK_OUT_GCS_PATH="gs://caip_notebooks_demo_temp/out-${NOTEBOOK_FILE_NAME}"
 
-gsutil cp ./demo.ipynb "${NOTEBOOK_GCS_PATH}"
+gsutil cp "${NOTEBOOK_FILE_NAME}" "${NOTEBOOK_GCS_PATH}"
 
 UUID=$(cat /proc/sys/kernel/random/uuid)
 JOB_NAME=$(echo "demo-nb-run-${UUID}" | tr '-' '_')
