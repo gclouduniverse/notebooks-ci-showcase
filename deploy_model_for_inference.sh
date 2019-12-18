@@ -10,6 +10,12 @@ readonly FRAMEWORK="tensorflow"
 # One time operaion for creating new model
 # gcloud ai-platform models create "${MODEL_NAME}" --project "${PROJECT_ID}"
 
+echo "starting command with VERSION_NAME: ${VERSION_NAME}"
+echo "starting command with MODEL_NAME: ${MODEL_NAME}"
+echo "starting command with GCS_MODEL_DIR: ${GCS_MODEL_DIR}"
+echo "starting command with GCS_MODEL_DIR: ${FRAMEWORK}"
+echo "starting command with GCS_MODEL_DIR: ${PROJECT_ID}"
+
 gcloud ai-platform versions create "${VERSION_NAME}" \
   --model "${MODEL_NAME}" \
   --origin "${GCS_MODEL_DIR}" \
