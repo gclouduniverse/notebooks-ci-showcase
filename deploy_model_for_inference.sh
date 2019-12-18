@@ -1,3 +1,5 @@
+#!/bin/bash -u
+
 readonly GCS_MODEL_DIR="gs://caip_notebooks_demo_temp/models/saved_model/"
 readonly PROJECT_ID="caip-notebooks-demo"
 readonly MODEL_NAME="test_model"
