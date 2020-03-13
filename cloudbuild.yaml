@@ -1,6 +1,7 @@
 # These are Cloud Build steps. You can read more about cloud build here: 
 # https://cloud.google.com/cloud-build/docs/
 # All these steps sharing a filesystem between each other.
+timeout: 7200s
 steps:
   # First, we need to clone the repository that we need to test.
   # This will also clone submodules that are used as dependancies.
@@ -15,6 +16,7 @@ steps:
   args: ['checkout', '$COMMIT_SHA']
   dir: 'notebooks-ci-showcase'
 - name: 'docker.io/library/python:3.7'
-  id: 'install'
-  args: ['bash', '-c', 'pip install gcloud-notebook-training && gcloud-notebook-training --input-notebook notebooks/reproducible.ipynb']
-
+  id: 'train'
+  args: ['bash', '-c', 'pip install gcloud-notebook-training && git show --name-only $COMMIT_SHA | grep -i .ipynb | xargs gcloud-notebook-training --input-notebook']
+  dir: 'notebooks-ci-showcase'
+  timeout: 7200s
