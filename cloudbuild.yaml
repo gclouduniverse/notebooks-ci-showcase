@@ -17,6 +17,6 @@ steps:
   dir: 'notebooks-ci-showcase'
 - name: 'docker.io/library/python:3.7'
   id: 'train'
-  args: ['bash', '-c', 'pip install gcloud-notebook-training && git show --name-only $COMMIT_SHA | grep -i .ipynb | xargs gcloud-notebook-training --input-notebook']
+  args: ['bash', '-c', 'pip install gcloud-notebook-training && git show --name-only $COMMIT_SHA | grep -i .ipynb | xargs -I gcloud-notebook-training --input-notebook']
   dir: 'notebooks-ci-showcase'
   timeout: 7200s
