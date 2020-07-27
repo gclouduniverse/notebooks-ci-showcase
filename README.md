@@ -1,5 +1,5 @@
 ## Note
-For **latest** version of this project please take a look [here](https://github.com/GoogleCloudPlatform/ai-platform-samples/tree/master/notebooks/notebooks-ci-showcase)
+For **latest** version of this project please take a look [here](https://github.com/GoogleCloudPlatform/ai-platform-samples/tree/master/notebooks/tools/notebooks-ci-showcase)
 
 # Fully Configured Example of CI/CD for Notebooks on Top of Google Cloud Platform
 
