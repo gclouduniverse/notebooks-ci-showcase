@@ -1,9 +1,9 @@
 ## Note
 For **latest** version of this project please take a look [here](https://github.com/GoogleCloudPlatform/ai-platform-samples/tree/master/notebooks/tools/notebooks-ci-showcase)
 
-# Fully Configured Example of DL Pipeline build around Jupyter Notebooks
+# Fully configured Deep Learning Pipeline built around Jupyter Notebooks
 
-This repository includes a fully functional pipeline for cleaning tranig and deployment for DL Model. 
+This repository includes a fully functional pipeline for cleaning, traning and deployment for a Deep Learning Model. 
 
 The goal of this repository is to showcase what can be built using notebook-centric development practices, and we aim for it to be a reference implementation for those who want to develop similar systems on Google Cloud. For the purposes of this example, we have created two notebooks for cleaning data and for training. 
 
