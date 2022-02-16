@@ -3,20 +3,8 @@
 # All these steps sharing a filesystem between each other.
 timeout: 7200s
 steps:
-  # First, we need to clone the repository that we need to test.
-  # This will also clone submodules that are used as dependancies.
-- name: 'gcr.io/cloud-builders/git'
-  id: 'clone'
-  args: ['clone', '--recurse-submodules', '--branch', 'repro_nb_based_pipeline', 'https://github.com/gclouduniverse/notebooks-ci-showcase']
-  # Next, we need to checkout the exact commit that we need to test. Otherwise, Cloud Build will be testing the master.
-  # Variable $COMMIT_SHA provided by the Cloud Build. You can find more about Cloud Build variables here:
-  # https://cloud.google.com/cloud-build/docs/configuring-builds/substitute-variable-values
-- name: 'gcr.io/cloud-builders/git'
-  id: 'checkout'
-  args: ['checkout', '$COMMIT_SHA']
+  # We will start with uploading Notebook to the GCS bucker where it can be later on executed by Vertex AI Workbench
+- name: 'gcr.io/cloud-builders/gsutil'
+  id: 'copy-notebook-to-gcs'
+  args: ['cp', 'notebooks/clean.ipynb', 'gs://gtc-conf-examples/clean-${COMMIT_SHA}.ipynb']
   dir: 'notebooks-ci-showcase'
-- name: 'docker.io/library/python:3.7'
-  id: 'train'
-  args: ['bash', '-c', 'pip install gcloud-notebook-training && git diff-tree --no-commit-id --name-only -r $COMMIT_SHA | grep -i .ipynb | xargs -I {} gcloud-notebook-training --input-notebook {}']
-  dir: 'notebooks-ci-showcase'
-  timeout: 7200s
