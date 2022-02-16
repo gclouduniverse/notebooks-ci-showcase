@@ -6,5 +6,5 @@ steps:
   # We will start with uploading Notebook to the GCS bucker where it can be later on executed by Vertex AI Workbench
 - name: 'gcr.io/cloud-builders/gsutil'
   id: 'copy-notebook-to-gcs'
-  args: ['cp', 'notebooks/clean.ipynb', 'gs://gtc-conf-examples/clean-${COMMIT_SHA}.ipynb']
-  dir: 'workspace'
+  args: ['cp', './notebooks/clean.ipynb', 'gs://gtc-conf-examples/clean-${COMMIT_SHA}.ipynb']
+  dir: 'notebooks-ci-showcase'
