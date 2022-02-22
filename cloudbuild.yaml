@@ -6,4 +6,4 @@ steps:
   # Executing the notebook
 - name: 'us-west2-docker.pkg.dev/public-gcr/ai-workbench/workbench-cli'
   id: 'run-clean-notebook'
-  args: ['execute-notebook', '--notebook','./notebooks/clean.ipynb', '--gcs-folder', 'gs://gtc-conf-examples/', '--location', 'us-central1', '--project', 'ml-lab-152505', '--execution-id', '${COMMIT_SHA}', '--wait']
+  args: ['execute-notebook', '--notebook','./notebooks/clean.ipynb', '--gcs-folder', 'gs://gtc-conf-examples/${COMMIT_SHA}/', '--location', 'us-central1', '--project', 'ml-lab-152505', '--wait']
