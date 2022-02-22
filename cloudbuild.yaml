@@ -3,7 +3,11 @@
 # All these steps sharing a filesystem between each other.
 timeout: 7200s
 steps:
-  # We will start with uploading Notebook to the GCS bucker where it can be later on executed by Vertex AI Workbench
-- name: 'gcr.io/cloud-builders/gsutil'
-  id: 'copy-notebook-to-gcs'
-  args: ['cp', './notebooks/clean.ipynb', 'gs://gtc-conf-examples/clean-${COMMIT_SHA}.ipynb']
+  # Creating unique name for the notebook, just in case to save execution per each commit
+- name: 'alpine:3.15'
+  id: 'copy-notebook-with-right-name'
+  args: ['cp', './notebooks/clean.ipynb', './notebooks/clean-${COMMIT_SHA}.ipynb']
+  # Executing the notebook
+- name: 'us-west2-docker.pkg.dev/public-gcr/ai-workbench'
+  id: 'run-clean-notebook'
+  args: ['execute-notebook', '--notebook','./notebooks/clean-${COMMIT_SHA}.ipynb', '--gcs-folder', 'gs://gtc-conf-examples/', '--location', 'us-central1', '--project', 'ml-lab-152505']
