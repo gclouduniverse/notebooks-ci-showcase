@@ -11,3 +11,7 @@ steps:
 - name: 'us-west2-docker.pkg.dev/public-gcr/ai-workbench/workbench-cli'
   id: 'extract-model-from-notebook'
   args: ['extract-model-from-notebook', '--tag','us-west2-docker.pkg.dev/public-gcr/ai-workbench/test-model:${COMMIT_SHA}', '--src', './notebooks/', '--main-notebook', '10_nlp.ipynb']
+  # Deploy notebooks to the production
+- name: 'us-west2-docker.pkg.dev/public-gcr/ai-workbench/workbench-cli'
+  id: 'deploy'
+  args: ['deploy', '--project','ml-lab-152505', '--location', 'us-central1', '--name', 'test-model', '--tag', 'us-west2-docker.pkg.dev/public-gcr/ai-workbench/test-model:${COMMIT_SHA}']
