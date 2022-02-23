@@ -1,7 +1,7 @@
 # These are Cloud Build steps. You can read more about cloud build here: 
 # https://cloud.google.com/cloud-build/docs/
 # All these steps sharing a filesystem between each other.
-timeout: 1050s
+timeout: 2050s
 steps:
   # Executing the notebook
 - name: 'us-west2-docker.pkg.dev/public-gcr/ai-workbench/workbench-cli'
