@@ -6,11 +6,11 @@ steps:
   # Executing the notebook
 - name: 'us-west2-docker.pkg.dev/public-gcr/ai-workbench/workbench-cli'
   id: 'run-clean-notebook'
-  args: ['execute-notebook', '--notebook','./notebooks/10_nlp.ipynb', '--gcs-folder', 'gs://gtc-conf-examples/${COMMIT_SHA}/', '--location', 'us-central1', '--project', 'ml-lab-152505', '--wait']
+  args: ['execute-notebook', '--notebook','./notebooks/mnist_training_loop_0223.ipynb', '--gcs-folder', 'gs://gtc-conf-examples/${COMMIT_SHA}/', '--location', 'us-central1', '--project', 'ml-lab-152505', '--wait']
   # Create model from the notebook
 - name: 'us-west2-docker.pkg.dev/public-gcr/ai-workbench/workbench-cli'
   id: 'extract-model-from-notebook'
-  args: ['extract-model-from-notebook', '--tag','us-west2-docker.pkg.dev/public-gcr/ai-workbench/test-model:${COMMIT_SHA}', '--src', './notebooks/', '--main-notebook', './notebooks/10_nlp.ipynb', '--target', './notebooks/container/', '--generate-only']
+  args: ['extract-model-from-notebook', '--tag','us-west2-docker.pkg.dev/public-gcr/ai-workbench/test-model:${COMMIT_SHA}', '--src', './notebooks/', '--main-notebook', './notebooks/mnist_training_loop_0223.ipynb', '--target', './notebooks/container/', '--generate-only']
   # Bulding containers
 - name: 'gcr.io/cloud-builders/docker'
   args: [ 'build', '-t', 'us-west2-docker.pkg.dev/public-gcr/ai-workbench/test-model:${COMMIT_SHA}', '-f', './notebooks/container/Dockerfile', './notebooks/container/' ]
