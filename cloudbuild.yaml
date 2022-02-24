@@ -6,7 +6,7 @@ steps:
   # Executing the notebook
 - name: 'us-west2-docker.pkg.dev/public-gcr/ai-workbench/workbench-cli'
   id: 'run-clean-notebook'
-  args: ['execute-notebook', '--notebook','./notebooks/mnist_training_loop_0223.ipynb', '--gcs-folder', 'gs://gtc-conf-examples/${COMMIT_SHA}/', '--location', 'us-central1', '--project', 'ml-lab-152505', '--wait']
+  args: ['execute-notebook', '--notebook','./notebooks/mnist_training_loop_0223.ipynb', '--gcs-folder', 'gs://gtc-conf-examples/${COMMIT_SHA}/', '--location', 'us-central1', '--project', 'ml-lab-152505', '--wait', '--env-container', 'gcr.io/deeplearning-platform-release/pytorch-gpu.1-10']
   # Create model from the notebook
 - name: 'us-west2-docker.pkg.dev/public-gcr/ai-workbench/workbench-cli'
   id: 'extract-model-from-notebook'
